@@ -3,7 +3,10 @@ const router = express.Router()
 const Bread = require('../models/bread')
 
 router.get('/', (req, res) => {
-    res.send(Bread)
+    res.render('index', {
+        breads: Bread,
+        title: 'Index Page'
+    })
 })
 
 router.get('/:arrayIndex', (req, res) => {
@@ -11,4 +14,4 @@ router.get('/:arrayIndex', (req, res) => {
     res.send(Bread[arrayIndex])
 })
 
-module.exports =  router
+module.exports = router
