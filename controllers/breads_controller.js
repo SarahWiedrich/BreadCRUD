@@ -44,6 +44,15 @@ router.delete('/:arrayIndex', (req,res) => {
     res.status(303).redirect('/breads')
 })
 
+//show the view - GET edit page
+router.get('/:arrayIndex/edit', (req,res) =>{
+    const { arrayIndex } = req.params
+    res.render('edit', {
+        bread: Bread[arrayIndex],
+        index: arrayIndex
+    })
+})
+
 //update Bread
 router.put('/:arrayIndex', (req, res) => {
     const { arrayIndex } = req.params
