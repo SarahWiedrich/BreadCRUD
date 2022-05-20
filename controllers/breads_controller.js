@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
     })
 })
 
-
 router.get('/new', (req,res) => {
     res.render('new')
 })
@@ -18,7 +17,8 @@ router.get('/new', (req,res) => {
 router.get('/:arrayIndex', (req, res) => {
     const { arrayIndex } = req.params
     res.render('show', {
-        bread: Bread[arrayIndex]
+        bread: Bread[arrayIndex],
+        index: arrayIndex
     })
 })
 
@@ -36,6 +36,25 @@ router.post('/', (req, res) => {
 
     Bread.push(req.body)
     res.redirect('/breads')
+})
+
+//Delete
+router.delete('/:arrayIndex', (req,res) => {
+    Bread.splice(req.params.arrayIndex, 1)
+    res.status(303).redirect('/breads')
+})
+
+//update Bread
+router.put('/:arrayIndex', (req, res) => {
+    const { arrayIndex } = req.params
+    if(req.body.hasGluten === 'on') {
+        req.body.hasGluten = true
+    }
+    else {
+        req.body.hasGluten = false
+    }
+    Bread[arrayIndex] = req.body
+    res.redirect(`/breads/${arrayIndex}`)
 })
 
 module.exports = router
