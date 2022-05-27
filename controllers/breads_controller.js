@@ -3,6 +3,21 @@ const res = require('express/lib/response')
 const router = express.Router()
 
 const Bread = require('../models/bread')
+const seedData = require('../models/seed')
+
+router.get('/new', (req,res) => {
+    res.render('new')
+})
+
+router.get('/seed', async (req,res) => {
+    try {
+        await Bread.insertMany(seedData)
+        res.redirect('/breads')
+    } catch (error) {
+        console.log(error)
+        res.send('ERROR')
+    }
+})
 
 //Get all breads
 router.get('/', async (req, res) => {
@@ -18,16 +33,12 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/new', (req,res) => {
-    res.render('new')
-})
-
 // get bread by index
 router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params
         const bread = await Bread.findById(id)
-        console.log(bread)
+        console.log(bread.bakedBy())
         res.render('show', {
             bread
         })
