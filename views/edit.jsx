@@ -1,24 +1,24 @@
 const React = require('react')
 const Default = require('./layouts/default')
 
-function Edit({ bread }) {
+function Edit({ bread, bakers }) {
     return (
         <Default>
             <h2>Edit Page</h2>
-            <form method='POST' action={`/breads/${bread._id}?_method=PUT`}>
+            <form method="POST" action={`/breads/${bread._id}?_method=PUT`}>
                 <label htmlFor='name'>Name</label>
                 <input
-                    type="text"
-                    name="name"
-                    id="name"
+                    type='text'
+                    name='name'
+                    id='name'
                     defaultValue={bread.name}
                     required
                 />
-                <label htmlFor="image">Image</label>
-                <input 
-                    type="text"
-                    name="image"
-                    id="image"
+                <label htmlFor='image'>Image</label>
+                <input
+                    type='text'
+                    name='image'
+                    id='image'
                     defaultValue={bread.image}
                 />
                 <label htmlFor='hasGluten'>Has Gluten</label>
@@ -27,17 +27,15 @@ function Edit({ bread }) {
                     name="hasGluten"
                     id="hasGluten"
                     defaultChecked={bread.hasGluten}
-                    />
+                />
+                <select name="baker" id="baker" defaultValue={bread.baker._id}>
+            {bakers.map(baker => {
+              return (
+                <option key={baker._id} value={baker._id}>{baker.name}</option>
+              )
+            })}
+                </select>
                 <br></br>
-                <label htmlFor="baker">Baker</label>
-                    <select name="baker" id="baker">
-                        <option value="Rachel">Rachel</option>
-                        <option value="Monica">Monica</option>
-                        <option value="Joey">Joey</option>
-                        <option value="Chandler">Chandler</option>
-                        <option value="Ross">Ross</option>
-                        <option value="Phoebe">Phoebe</option>
-                    </select>
                 <input type="submit" />
             </form>
         </Default>
